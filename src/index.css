@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light theme (default) — RGB triplets consumed by Tailwind's
+     rgb(var(--x) / <alpha-value>) pattern in tailwind.config.js. */
+  --color-sand-50: 250 249 246;
+  --color-sand-100: 245 243 238;
+  --color-sand-200: 237 234 226;
+  --color-ink-900: 22 33 47;
+  --color-ink-700: 58 71 86;
+  --color-ink-500: 102 116 138;
+  --color-ink-300: 154 166 184;
+  --color-line: 228 225 216;
+  --color-line-soft: 238 236 228;
+  --color-surface: 255 255 255;
+  color-scheme: light;
+}
+
+html.dark {
+  /* Dark theme — a navy-based palette so it stays on-brand rather than a
+     generic gray dark mode. */
+  --color-sand-50: 13 24 39;
+  --color-sand-100: 19 33 52;
+  --color-sand-200: 27 44 67;
+  --color-ink-900: 240 244 248;
+  --color-ink-700: 195 204 218;
+  --color-ink-500: 141 152 170;
+  --color-ink-300: 92 103 121;
+  --color-line: 39 57 81;
+  --color-line-soft: 30 46 67;
+  --color-surface: 22 38 59;
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  transition: background-color 0.2s ease;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  @apply bg-sand-50 text-ink-900 font-sans antialiased;
+}
+
+::selection {
+  background: #E3FAFB;
+  color: #123769;
+}
+
+h1, h2, h3, h4 {
+  @apply font-bold tracking-tight;
+}
+
+/* Logical-property RTL helpers used across the app so a single className
+   flips correctly when dir="rtl" is set on <html>. */
+.rtl-flip {
+  transform: scaleX(1);
+}
+[dir='rtl'] .rtl-flip {
+  transform: scaleX(-1);
+}
+
+/* Custom scrollbar (webkit) — subtle, on-brand */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--color-line));
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--color-ink-300));
+}
+
+/* Reduced motion accessibility toggle (applied via html.reduced-motion) */
+html.reduced-motion *,
+html.reduced-motion *::before,
+html.reduced-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Font-size accessibility scale (applied via html.text-sm / text-lg) */
+html.font-small { font-size: 14px; }
+html.font-medium { font-size: 16px; }
+html.font-large { font-size: 18px; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.35s ease both;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-toast {
+  animation: toastIn 0.25s ease both;
+}
