@@ -1,8 +1,0 @@
-{
-  "functions": {
-    "api/guide.js": {
-      "runtime": "nodejs20.x",
-      "maxDuration": 30
-    }
-  }
-}
