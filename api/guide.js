@@ -84,6 +84,15 @@ export default async function handler(req, res) {
     { role: 'user', content: contextBlock },
   ];
 
+  if (typeof fetch !== 'function') {
+    // Native fetch is only a global in Node 18+. If this fires, the
+    // function is running on an older runtime — see vercel.json /
+    // package.json "engines", and redeploy after checking Vercel's
+    // Project Settings → General → Node.js Version.
+    console.error('[UB Guide] global fetch is not available in this runtime.');
+    return res.status(500).json({ ok: false, error: 'Server runtime issue: fetch is unavailable (Node.js version too old). Check Vercel project Node.js version.' });
+  }
+
   try {
     const upstream = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -105,7 +114,10 @@ export default async function handler(req, res) {
 
     return res.status(200).json({ ok: true, ...parseReply(extractText(data)), source: 'claude' });
   } catch (err) {
+    // Surface the real error instead of a generic message — a network
+    // failure, a DNS issue, and a JSON-parse issue all look identical to
+    // the user otherwise, which makes this impossible to debug from the UI.
     console.error('[UB Guide] Request to Claude failed:', err);
-    return res.status(502).json({ ok: false, error: 'The AI service could not be reached. Please try again.' });
+    return res.status(502).json({ ok: false, error: `Could not reach Claude API: ${err?.message || 'unknown error'}` });
   }
 }
