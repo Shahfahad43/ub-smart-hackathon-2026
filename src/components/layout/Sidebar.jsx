@@ -9,6 +9,7 @@ import {
   Settings,
   LogOut,
   Globe,
+  MonitorPlay,
   X,
 } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
@@ -21,6 +22,7 @@ import logo from '../../assets/logo.png';
 const NAV_ITEMS = [
   { to: '/app/dashboard', icon: LayoutDashboard, key: 'sidebar.dashboard', fallback: { en: 'Dashboard', ar: 'لوحة التحكم' } },
   { to: '/app/ai', icon: Sparkles, key: null, fallback: ASSISTANT_NAME },
+  { to: '/app/blackboard', icon: MonitorPlay, key: null, fallback: { en: 'Blackboard Companion', ar: 'رفيق Blackboard' } },
   { to: '/app/services', icon: LayoutGrid, key: 'nav.services', fallback: { en: 'Services', ar: 'الخدمات' } },
   { to: '/app/tracker', icon: ListChecks, key: 'tracker.title', fallback: { en: 'Request Tracker', ar: 'متتبع الطلبات' } },
   { to: '/app/notifications', icon: Bell, key: 'notif.title', fallback: { en: 'Notifications', ar: 'الإشعارات' } },

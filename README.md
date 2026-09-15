@@ -131,6 +131,37 @@ use of `process.env.ANTHROPIC_API_KEY`, refusal-tag parsing, and history
 capped to the last exchange. All passed. The live deployed call is the one
 thing only you can verify.
 
+## Blackboard AI Learning Companion (frontend prototype — zero API calls)
+
+A **self-contained, hard-coded frontend prototype**, deliberately kept
+separate from the real UB Guide AI integration. It makes **no network or API
+calls of any kind** — `api/guide.js`, `src/lib/ubGuideApi.js`, and
+`ANTHROPIC_API_KEY` are never touched by this feature.
+
+- **`/app/blackboard`** (`src/pages/Blackboard.jsx`) — a live-class-style
+  page: a looping demo lecture video with custom play/pause, mute/volume,
+  and fullscreen controls (loops for ~2 minutes to simulate a full lecture
+  from a ~10s clip, then shows a "recording ended" state with replay), a
+  live class info card (course, instructor, LIVE badge, students online),
+  a **direct "Open in Blackboard" link** (also on the Dashboard), and five
+  AI actions: What Did I Miss, Summarize, Generate Notes, an interactive
+  Quiz (click an answer, get instant right/wrong feedback), and interactive
+  click-to-flip Flashcards.
+- **All AI responses are hard-coded** in `src/lib/blackboardData.js`
+  (bilingual EN/AR markdown text, quiz questions/answers, flashcards).
+  Clicking an action just renders that static content after a simulated
+  500–1000ms local delay (`setTimeout`, no `fetch`) so the interaction still
+  feels real without risking the working deployment.
+- **No new environment variables, no new dependencies** — reuses
+  `react-markdown`/`remark-gfm` (already installed) to render the hard-coded
+  responses with the same visual style as UB Guide's real answers, and the
+  native HTML5 `<video>` element for the lecture player.
+- **Nothing existing was modified to build this** beyond three minimal,
+  additive edits from the previous round: one route in `App.jsx`, one nav
+  item in `Sidebar.jsx`, one card on `Dashboard.jsx`. `api/guide.js` and
+  every other existing file remain byte-for-byte unchanged (verified by
+  checksum before/after this change).
+
 ## Avatars, dark theme, and Arabic fixes
 
 - **Avatars**: `src/lib/assistant.js` centralizes UB Guide's bilingual name
