@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { TrendingUp, Layers, CheckCircle, CalendarCheck, Sparkles, ArrowRight } from 'lucide-react';
+import { TrendingUp, Layers, CheckCircle, CalendarCheck, Sparkles, ArrowRight, MonitorPlay, ExternalLink } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import { Card } from '../components/ui/Card';
@@ -7,8 +7,13 @@ import Button from '../components/ui/Button';
 import { DEADLINES } from '../data/deadlines';
 import { gradeColor, levelColor, greetingKey } from '../lib/utils';
 import { ASSISTANT_NAME, ASSISTANT_AVATAR } from '../lib/assistant';
+import { BLACKBOARD_URL } from '../lib/blackboardData';
 
 const ASK_LABEL = { en: `Ask ${ASSISTANT_NAME.en}`, ar: `اسأل ${ASSISTANT_NAME.ar}` };
+const BB_LABEL = { en: 'Blackboard', ar: 'Blackboard' };
+const BB_SUB = { en: 'Join class or open your AI learning companion', ar: 'انضم للمحاضرة أو افتح رفيقك الذكي للتعلّم' };
+const BB_OPEN = { en: 'Open', ar: 'فتح' };
+const BB_COMPANION = { en: 'AI Companion', ar: 'الرفيق الذكي' };
 
 export default function Dashboard() {
   const { t, L } = useLanguage();
@@ -47,6 +52,26 @@ export default function Dashboard() {
         </div>
         <ArrowRight size={18} className="rtl-flip shrink-0" />
       </button>
+
+      {/* Direct access to Blackboard from the dashboard */}
+      <Card className="p-4 mb-6 flex flex-wrap items-center gap-4">
+        <span className="w-11 h-11 rounded-md bg-teal-500/10 text-teal-600 flex items-center justify-center shrink-0">
+          <MonitorPlay size={20} strokeWidth={2} />
+        </span>
+        <div className="flex-1 min-w-[160px]">
+          <p className="text-sm font-bold text-ink-900">{L(BB_LABEL)}</p>
+          <p className="text-xs text-ink-500 truncate">{L(BB_SUB)}</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <Button variant="ghost" size="sm" onClick={() => navigate('/app/blackboard')}>
+            {L(BB_COMPANION)}
+          </Button>
+          <Button as="a" href={BLACKBOARD_URL} target="_blank" rel="noopener noreferrer" variant="primary" size="sm">
+            <ExternalLink size={14} />
+            {L(BB_OPEN)}
+          </Button>
+        </div>
+      </Card>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         {stats.map((s) => (

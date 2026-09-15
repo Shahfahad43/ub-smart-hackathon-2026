@@ -15,6 +15,7 @@ import Tracker from './pages/Tracker';
 import Notifications from './pages/Notifications';
 import Profile from './pages/Profile';
 import SettingsPage from './pages/Settings';
+import Blackboard from './pages/Blackboard';
 
 export default function App() {
   return (
@@ -34,6 +35,7 @@ export default function App() {
                 <Route path="services/:id" element={<ServiceDetail />} />
                 <Route path="services/:id/request" element={<RequestForm />} />
                 <Route path="tracker" element={<Tracker />} />
+                <Route path="blackboard" element={<Blackboard />} />
                 <Route path="notifications" element={<Notifications />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="settings" element={<SettingsPage />} />
